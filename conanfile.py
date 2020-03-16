@@ -11,9 +11,15 @@ class LibeventConan(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
-    requires = "zlib/1.2.11@dostolski/testing","OpenSSL/1.0.2l@dostolski/testing"
-    
-    def source(self):        
+
+    requires = (
+        # patched
+        "openssl/OpenSSL_1_1_1-stable@conan/stable",
+        # patched to support "openssl/OpenSSL_1_1_1-stable@conan/stable"
+        "zlib/v1.2.11@conan/stable",
+    )
+
+    def source(self):
         self.run("git clone {}".format(LibeventConan.url))
         self.run("cd libevent && git checkout -b release-{}-stable release-{}-stable".format(LibeventConan.version, LibeventConan.version))
         tools.replace_in_file("libevent/CMakeLists.txt", "project(libevent C)", '''project(libevent C)
@@ -41,8 +47,8 @@ conan_basic_setup()''')
                     ${LIB_APPS}
                     ${LIB_PLATFORM}
                     ${CMAKE_DL_LIBS})''')
-        
-        
+
+
     def build(self):
         cmake = CMake(self)
         self.run("mkdir build && cd build && cmake ../libevent %s" % cmake.command_line)
