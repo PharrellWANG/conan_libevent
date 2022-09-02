@@ -4,7 +4,7 @@ Modified `libevent` recipe
 
 ## EXTRA FEATURES
 
-- supports "openssl/OpenSSL_1_1_1-stable@conan/stable"
+- supports "openssl/1.1.1-stable@conan/stable"
 
 
 ## HOW TO BUILD WITH SANITIZERS ENABLED
@@ -88,7 +88,7 @@ sudo -E docker build \
 ```bash
 export PKG_NAME=libevent/2.1.11@dev/stable
 conan remove --force $PKG_NAME
-conan create . dev/stable -s build_type=Debug --profile clang --build missing
+conan create . dev/stable -s build_type=Debug --profile clang --build missing -o openssl:shared=True
 CONAN_REVISIONS_ENABLED=1 CONAN_VERBOSE_TRACEBACK=1 CONAN_PRINT_RUN_COMMANDS=1 CONAN_LOGGING_LEVEL=10 conan upload $PKG_NAME --all -r=conan-local -c --retry 3 --retry-wait 10 --force
 
 # clean build cache
