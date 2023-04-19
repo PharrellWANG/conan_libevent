@@ -34,7 +34,7 @@ class LibeventConan(conan_build_helper.CMakePackage):
                "disable_threads": [True, False]}
     default_options = {"shared": False,
                        "fPIC": True,
-                       "with_openssl": True,
+                       "with_openssl": ,
                        "disable_threads": False}
     generators = "cmake", "cmake_find_package"
 
